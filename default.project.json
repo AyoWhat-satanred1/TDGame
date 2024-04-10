@@ -1,0 +1,41 @@
+{
+    "name": "TDGame",
+    "tree": {
+      "$className": "DataModel",
+  
+      "ReplicatedStorage": {
+        "Client": {
+          "$path": "src/Client"
+        },
+  
+        "Shared" : {
+          "$path" : "src/Shared"
+        },
+
+        "Packages" : {
+          "$path" : "./Packages"
+        }
+      },
+  
+      "ServerStorage": {
+        "Server": {
+          "$path": "src/Server"
+        },
+        "ServerPackages": {
+          "$path": "./ServerPackages"
+        }
+      },
+  
+      "ReplicatedFirst" : {
+        "ClientRuntime" : {
+          "$path" : "src/Client/ClientRuntime.client.luau"
+        }
+      },
+  
+      "ServerScriptService" : {
+        "ServerRuntime" : {
+          "$path" : "src/Server/ServerRuntime.server.luau"
+        }
+      }
+    }
+  }

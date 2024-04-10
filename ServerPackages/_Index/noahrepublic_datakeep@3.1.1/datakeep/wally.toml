@@ -1,0 +1,16 @@
+[package]
+name = "noahrepublic/datakeep"
+description = "The final data saving solution you need"
+version = "3.1.1"
+license = "MIT"
+authors = ["noahrepublic"]
+registry = "https://github.com/UpliftGames/wally-index"
+realm = "server"
+
+exclude = ["**"]
+include = ["src", "src/*", "default.project.json", "wally.toml", "LICENSE"]
+
+[dependencies]
+
+Signal = "lucasmzreal/fastsignal@10.2.1"
+Promise = "evaera/promise@4.0.0"
