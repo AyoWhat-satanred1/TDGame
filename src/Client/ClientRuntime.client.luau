@@ -43,7 +43,7 @@ Knit.Start()
 _G.__DEV__ = game:GetService("RunService"):IsStudio()
 
 local root = ReactRoblox.createRoot(Instance.new("Folder"))
-local Apps: { [string]: React.ReactNode } = {}
+local apps: { [string]: React.ReactNode } = {}
 
 for _index, app in ipairs(UIFolder.Apps:GetChildren()) do
 	if not app:IsA("ModuleScript") then
@@ -57,7 +57,7 @@ for _index, app in ipairs(UIFolder.Apps:GetChildren()) do
 		return
 	end
 
-	Apps[app.Name] = React.createElement(appElement)
+	apps[app.Name] = React.createElement(appElement)
 end
 
-root:render(ReactRoblox.createPortal(Apps, LocalPlayer.PlayerGui))
+root:render(ReactRoblox.createPortal(apps, LocalPlayer.PlayerGui))
