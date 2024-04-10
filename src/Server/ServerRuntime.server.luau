@@ -10,13 +10,16 @@ local SERVICE_TIMEOUT = 5
 require(ServerStorage.Store.RootProvider)
 
 -- load services (Knit)
-for _index, service in ipairs(ServerFolder.Services:GetChildren()) do
-    if not service:IsA("ModuleScript") then
-		warn(`Initing {service.Name} Failed, {service.Name} is not a Service ModuleScript - error on Server/ServerRuntime`)
-		return
-	end
+local services = ServiceFolder.Services:GetChildren()
+local servicePromises: { Promise.Promise } = table.create(#services)
 
-    load(service)
+for _index, service in ipairs(services) do
+    if not service:IsA("ModuleScript") then
+	warn(`Initing {service.Name} Failed, {service.Name} is not a Service ModuleScript - error on Server/ServerRuntime`)
+	return
+    end
+
+    local promise = load(service)
         :timeout(SERVICE_TIMEOUT)
         :catch(function(reason)
             warn(`Initing {service.Name} Failed, {reason} - error on Server/ServerRuntime`)
@@ -24,4 +27,14 @@ for _index, service in ipairs(ServerFolder.Services:GetChildren()) do
         :andThen(function(serviceDef)
             Knit.CreateService(serviceDef)
         end)
+
+    table.insert(servicePromises, promise)
 end
+
+Promise.allSettled(servicePromises):await()
+
+Knit.Start()
+    :catch(function(reason)
+        warn(`Starting Knit Failed, {reason} - error on ServerRuntime`)
+    end)
+    :await()
