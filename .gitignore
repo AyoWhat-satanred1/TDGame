@@ -1,0 +1,8 @@
+*.rbxlx
+*.rbxl
+*.rbxl.lock
+*.rbxmx
+*.rbxm
+sourcemap.json
+wally.lock
+wally.toml
