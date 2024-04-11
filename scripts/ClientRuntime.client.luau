@@ -47,7 +47,7 @@ Promise.allSettled(controllerPromises):await()
 
 Knit.Start()
     :catch(function(reason)
-	warn(`Starting Knit Failed, {reason} - error on ClientRuntime`)
+	    warn(`Starting Knit Failed, {reason} - error on ClientRuntime`)
     end)
     :await()
 
