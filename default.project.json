@@ -28,13 +28,13 @@
   
       "ReplicatedFirst" : {
         "ClientRuntime" : {
-          "$path" : "src/Client/ClientRuntime.client.luau"
+          "$path" : "scripts/ClientRuntime.client.luau"
         }
       },
   
       "ServerScriptService" : {
         "ServerRuntime" : {
-          "$path" : "src/Server/ServerRuntime.server.luau"
+          "$path" : "scripts/ServerRuntime.server.luau"
         }
       }
     }
