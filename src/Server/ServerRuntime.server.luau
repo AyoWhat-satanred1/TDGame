@@ -14,27 +14,27 @@ local services = ServiceFolder.Services:GetChildren()
 local servicePromises: { Promise.Promise } = table.create(#services)
 
 for _index, service in ipairs(services) do
-    if not service:IsA("ModuleScript") then
-	warn(`Initing {service.Name} Failed, {service.Name} is not a Service ModuleScript - error on Server/ServerRuntime`)
-	return
-    end
+        if not service:IsA("ModuleScript") then
+	    warn(`Initing {service.Name} Failed, {service.Name} is not a Service ModuleScript - error on Server/ServerRuntime`)
+	    return
+        end
 
-    local promise = load(service)
-        :timeout(SERVICE_TIMEOUT)
-        :catch(function(reason)
-            warn(`Initing {service.Name} Failed, {reason} - error on Server/ServerRuntime`)
-        end)
-        :andThen(function(serviceDef)
-            Knit.CreateService(serviceDef)
-        end)
+        local promise = load(service)
+                :timeout(SERVICE_TIMEOUT)
+                :catch(function(reason)
+                    warn(`Initing {service.Name} Failed, {reason} - error on Server/ServerRuntime`)
+                end)
+                :andThen(function(serviceDef)
+                    Knit.CreateService(serviceDef)
+                end)
 
-    table.insert(servicePromises, promise)
+        table.insert(servicePromises, promise)
 end
 
 Promise.allSettled(servicePromises):await()
 
 Knit.Start()
-    :catch(function(reason)
-        warn(`Starting Knit Failed, {reason} - error on ServerRuntime`)
-    end)
-    :await()
+        :catch(function(reason)
+            warn(`Starting Knit Failed, {reason} - error on ServerRuntime`)
+        end)
+        :await()
