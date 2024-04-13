@@ -600,6 +600,26 @@ function t.integer(value)
 end
 
 --[[**
+	ensures value is an unsigned integer
+
+	@param value The value to check against
+
+	@returns True iff the condition is satisfied, false otherwise
+**--]]
+function t.unsignedInteger(value)
+	local success, errMsg = t.number(value)
+	if not success then
+		return false, errMsg or ""
+	end
+
+	if value % 1 == 0 and value >= 0 then
+		return true
+	else
+		return false, string.format("unsigned integer expected, got %s", value)
+	end
+end
+
+--[[**
 	ensures value is a number where min <= value
 
 	@param min The minimum to use
