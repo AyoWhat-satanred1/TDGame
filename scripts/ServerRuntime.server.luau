@@ -1,5 +1,5 @@
 local ServerStorage = game:GetService("ServerStorage")
-local ServerFolder = ServerStorage.Server
+local ServerFolder = ServerStorage.server
 local Packages = game:GetService("ReplicatedStorage").Packages
 local Promise = require(Packages.Promise)
 local Knit = require(Packages.Knit)
@@ -7,10 +7,10 @@ local load = Promise.promisify(require)
 local SERVICE_TIMEOUT = 5
 
 -- load root-provider (Reflex)
-require(ServerFolder.Store.RootProvider)
+require(ServerFolder.store["root-producer"])
 
 -- load services (Knit)
-local services = ServerFolder.Services:GetChildren()
+local services = ServerFolder.services:GetChildren()
 local servicePromises: { Promise.Promise } = table.create(#services)
 
 for _index, service in ipairs(services) do

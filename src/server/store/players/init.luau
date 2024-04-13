@@ -1,6 +1,6 @@
 local Players = game:GetService("Players")
-local producer = require(script.Slice)
-local selectors = require(script.Selectors)
+local producer = require(script["players-slice"])
+local selectors = require(script["players-selectors"])
 
 export type State = producer.PlayersState
 export type Actions = producer.PlayersActions

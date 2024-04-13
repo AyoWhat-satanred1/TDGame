@@ -1,6 +1,6 @@
 local Packages = game:GetService("ReplicatedStorage").Packages
 local Reflex = require(Packages.Reflex)
-local players = require(script.Parent.Players)
+local players = require(script.Parent.players)
 
 export type RootProducer = Reflex.Producer<RootState, RootActions>
 

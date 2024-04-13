@@ -7,8 +7,8 @@ task.wait()
 
 local LocalPlayer = game:GetService("Players").LocalPlayer
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local ClientFolder = ReplicatedStorage.Client
-local UIFolder = ClientFolder.UI
+local Client = ReplicatedStorage.client
+local UIFolder = Client.UI
 local Packages = ReplicatedStorage.Packages
 local Knit = require(Packages._Index["sleitnick_knit@1.7.0"]["knit"]["KnitClient"])
 local React = require(Packages.React)
@@ -19,10 +19,10 @@ local CONTROLLER_TIMEOUT = 3
 local APP_LOAD_TIMEOUT = 5
 
 -- load root-provider (Reflex)
-require(ClientFolder.Store.RootProvider)
+require(Client.store["root-producer"])
 
 -- load controllers (Knit)
-local controllers = ClientFolder.Controllers:GetChildren()
+local controllers = Client.controllers:GetChildren()
 local controllerPromises: { Promise.Promise } = table.create(#controllers)
 
 for _index, controller in ipairs(controllers) do
@@ -56,7 +56,7 @@ _G.__DEV__ = game:GetService("RunService"):IsStudio()
 
 local root = ReactRoblox.createRoot(Instance.new("Folder"))
 local appNodes: { [string]: React.ReactNode } = {}
-local apps = UIFolder.Apps:GetChildren()
+local apps = UIFolder.apps:GetChildren()
 local appPromises: { Promise.Promise } = table.create(#apps)
 
 for _index, app in ipairs(apps) do

@@ -4,12 +4,12 @@
       "$className": "DataModel",
   
       "ReplicatedStorage": {
-        "Client": {
-          "$path": "src/Client"
+        "client": {
+          "$path": "src/client"
         },
   
-        "Shared" : {
-          "$path" : "src/Shared"
+        "shared" : {
+          "$path" : "src/shared"
         },
 
         "Packages" : {
@@ -18,8 +18,8 @@
       },
   
       "ServerStorage": {
-        "Server": {
-          "$path": "src/Server"
+        "server": {
+          "$path": "src/server"
         },
         "ServerPackages": {
           "$path": "./ServerPackages"
@@ -27,14 +27,14 @@
       },
   
       "ReplicatedFirst" : {
-        "ClientRuntime" : {
-          "$path" : "scripts/ClientRuntime.client.luau"
+        "clientRuntime" : {
+          "$path" : "scripts/clientRuntime.client.luau"
         }
       },
   
       "ServerScriptService" : {
-        "ServerRuntime" : {
-          "$path" : "scripts/ServerRuntime.server.luau"
+        "serverRuntime" : {
+          "$path" : "scripts/serverRuntime.server.luau"
         }
       }
     }

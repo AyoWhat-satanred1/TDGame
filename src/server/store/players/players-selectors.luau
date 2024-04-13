@@ -1,4 +1,4 @@
-local players = require(script.Parent.Slice)
+local players = require(script.Parent["players-slice"])
 
 local function selectEntities(state: players.PlayersState)
     return state.entities
