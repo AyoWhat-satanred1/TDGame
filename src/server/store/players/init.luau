@@ -61,12 +61,11 @@ local function playerRemoving(player)
     local document = documents[player]
 
     if document ~= nil then
+        producer.removePlayer(tostring(player.UserId))
         documents[player] = nil
+
         document
             :close()
-            :andThen(function()
-                producer.removePlayer(tostring(player.UserId))
-            end)
             :catch(function(reason)
                 warn(`{player.Name}'s Document failed to close, {reason} - error on server/store/players`)
             end)
