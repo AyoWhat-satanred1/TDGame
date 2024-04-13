@@ -77,6 +77,8 @@ local function getPlayerId(player: producer.PlayerEntity, _index: string)
 end
 
 producer:observe(selectors.selectPlayers, getPlayerId, function(player: producer.PlayerEntity, _index)
+    local playerInstance = Players:GetPlayerByUserId(tonumber(player.id) :: number)
+    
     local leaderstats = Instance.new("Folder")
     leaderstats.Name = "leaderstats"
 
@@ -90,17 +92,24 @@ producer:observe(selectors.selectPlayers, getPlayerId, function(player: producer
     winsValue.Value = player.wins
     winsValue.Parent = leaderstats
 
-    leaderstats.Parent = Players:GetPlayerByUserId(tonumber(player.id) :: number)
+    leaderstats.Parent = playerInstance
+    
+    local unsubscribeSave = producer:subscribe(selectors.selectPlayerById(player.id), function(current: producer.PlayerEntity, previous: producer.PlayerEntity?)
+        if previous ~= nil then
+            documents[playerInstance]:write(Dict.removeKey(current, "id"))
+        end
+    end)
 
-    local unsubscribeLevel = producer:subscribe(selectors.selectPlayerLevelById(player.id), function(current: number, _previous: number)
+    local unsubscribeLevel = producer:subscribe(selectors.selectPlayerLevelById(player.id), function(current: number, _previous: number?)
         levelValue.Value = current
     end)
 
-    local unsubscribeWins = producer:subscribe(selectors.selectPlayerWinsById(player.id), function(current: number, _previous: number)
+    local unsubscribeWins = producer:subscribe(selectors.selectPlayerWinsById(player.id), function(current: number, _previous: number?)
         winsValue.Value = current
     end)
 
     return function()
+        unsubscribeSave()
         unsubscribeLevel()
         unsubscribeWins()
     end
