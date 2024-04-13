@@ -24,7 +24,7 @@ end
 
 return {
     selectPlayers = selectPlayers,
-    selectPlayetById = selectPlayerById,
+    selectPlayerById = selectPlayerById,
     selectPlayerLevelById = selectPlayerLevelById,
     selectPlayerWinsById = selectPlayerWinsById
 }
