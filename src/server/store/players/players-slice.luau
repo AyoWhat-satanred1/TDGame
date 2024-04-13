@@ -8,6 +8,7 @@ export type PlayerEntity = {
     money: number,
     exp: number,
     level: number,
+    wins: number,
     selectedTowers: { string },
     ownedTowers: {
         [string]: {

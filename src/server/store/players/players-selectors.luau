@@ -1,9 +1,23 @@
 local players = require(script.Parent["players-slice"])
 
-local function selectEntities(state: players.PlayersState)
+local function selectPlayers(state: players.PlayersState)
     return state.entities
 end
 
+local function selectPlayerLevelById(id: string)
+    return function(state: players.PlayersState)
+        return state.entities[id].level
+    end
+end
+
+local function selectPlayerWinsById(id: string)
+    return function(state: players.PlayersState)
+        return state.entities[id].wins
+    end
+end
+
 return {
-    selectEntities = selectEntities
+    selectPlayers = selectPlayers,
+    selectPlayerLevelById = selectPlayerLevelById,
+    selectPlayerWinsById = selectPlayerWinsById
 }

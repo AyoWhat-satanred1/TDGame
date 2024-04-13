@@ -2,6 +2,7 @@ export type DefaultData = {
     money: number,
     exp: number,
     level: number,
+    wins: number,
     selectedTowers: { string },
     ownedTowers: {
         [string]: {
@@ -15,6 +16,7 @@ return {
         money = 100,
         exp = 0,
         level = 1,
+        wins = 0,
         selectedTowers = {},
         ownedTowers = {}
     } :: DefaultData

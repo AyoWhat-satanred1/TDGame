@@ -79,4 +79,4 @@ end
 
 Promise.allSettled(appPromises):await()
 
-root:render(ReactRoblox.createPortal(appNodes, LocalPlayer.PlayerGui))
+-- root:render(ReactRoblox.createPortal(appNodes, LocalPlayer.PlayerGui))

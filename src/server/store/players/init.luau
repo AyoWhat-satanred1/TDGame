@@ -24,13 +24,10 @@ local collection = Lapis.createCollection("PlayerData", {
         money = t.unsignedInteger,
         level = t.unsignedInteger,
         exp = t.unsignedInteger,
-        ownedTowers = t.strictInterface({
-            [t.string] = t.strictInterface({
-                name = t.string
-            })
-        }),
-        selectedTowers = t.strictArray({ t.string })
-    })
+        wins = t.unsignedInteger,
+        ownedTowers = t.map(t.string, t.strictInterface({ name = t.string })),
+        selectedTowers = t.array(t.string)
+    }),
 })
 
 local function playerAdded(player)
@@ -76,13 +73,47 @@ local function playerRemoving(player)
     end
 end
 
+local function getPlayerId(player: producer.PlayerEntity, _index: string)
+    return player.id
+end
+
+producer:observe(selectors.selectPlayers, getPlayerId, function(player: producer.PlayerEntity, _index)
+    local leaderstats = Instance.new("Folder")
+    leaderstats.Name = "leaderstats"
+
+    local levelValue = Instance.new("IntValue")
+    levelValue.Name = "Level"
+    levelValue.Value = player.level
+    levelValue.Parent = leaderstats
+    
+    local winsValue = Instance.new("IntValue")
+    winsValue.Name = "Wins"
+    winsValue.Value = player.wins
+    winsValue.Parent = leaderstats
+
+    leaderstats.Parent = Players:GetPlayerByUserId(tonumber(player.id) :: number)
+
+    local unsubscribeLevel = producer:subscribe(selectors.selectPlayerLevelById(player.id), function(current: number, _previous: number)
+        levelValue.Value = current
+    end)
+
+    local unsubscribeWins = producer:subscribe(selectors.selectPlayerWinsById(player.id), function(current: number, _previous: number)
+        winsValue.Value = current
+    end)
+
+    return function()
+        unsubscribeLevel()
+        unsubscribeWins()
+    end
+end)
+
+for _index, player in ipairs(Players:GetPlayers()) do
+    task.spawn(playerAdded, player)
+end
+
 Players.PlayerAdded:Connect(playerAdded)
 
 Players.PlayerRemoving:Connect(playerRemoving)
-
-for _index, player in ipairs(Players:GetPlayers()) do
-    playerAdded(player)
-end
 
 return {
     playersSlice = producer,
