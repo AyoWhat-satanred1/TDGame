@@ -10,6 +10,10 @@ local function selectPlayerById(id: string)
     end
 end
 
+local function selectPlayerId(player: players.PlayerEntity, _index: string)
+    return player.id
+end
+
 local function selectPlayerLevelById(id: string)
     return function(state: players.PlayersState)
         return state.entities[id].level
