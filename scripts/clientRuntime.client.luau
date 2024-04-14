@@ -3,7 +3,7 @@
 -- display loading screen first
 local ReplicatedFirst = game:GetService("ReplicatedFirst")
 local LocalPlayer = game:GetService("Players").LocalPlayer
-local loadingScreen = ReplicatedFirst.LoadingScreen
+local loadingScreen: ScreenGui & { [string]: any } = ReplicatedFirst.LoadingScreen
 loadingScreen.Parent = LocalPlayer:WaitForChild("PlayerGui")
 loadingScreen.Enabled = true
 
@@ -18,7 +18,6 @@ task.wait()
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ContentProvider = game:GetService("ContentProvider")
-local RunService = game:GetService("RunService")
 local Client = ReplicatedStorage.client
 local UIFolder = Client.ui
 local Packages = ReplicatedStorage.Packages
@@ -94,13 +93,13 @@ Promise.allSettled(appPromises):await()
 -- root:render(ReactRoblox.createPortal(appNodes, LocalPlayer.PlayerGui))
 
 -- continue loading screen preloads
-local assetsLoadedText = loadingScreen.Background.DisplayAssetsLoaded
-local percentageText = loadingScreen.Background.DisplayPercentage
-local skipBar = loadingScreen.Background.BarBackground.Bar
-local skipButton = loadingScreen.Background.SkipButton
+local assetsLoadedText: TextLabel = loadingScreen.Background.DisplayAssetsLoaded
+local percentageText: TextLabel = loadingScreen.Background.DisplayPercentage
+local skipBar: Frame = loadingScreen.Background.BarBackground.Bar
+local skipButton: TextButton = loadingScreen.Background.SkipButton
 
 local assets: { Model } = {}
-for _, instance in workspace.Assets:GetDescendants() do
+for _index, instance in workspace.Assets:GetDescendants() :: { Instance } do
     if instance:IsA("Model") then
         table.insert(assets, instance)
     end
@@ -110,7 +109,7 @@ assetsLoadedText.Text = `Loaded Assets : 0/{#assets}`
 
 local loadedAssets = 0
 local preloadPromise = Promise.try(function()
-    for _, asset in ipairs(assets) do
+    for _index, asset in ipairs(assets) do
         ContentProvider:PreloadAsync({ asset })
         loadedAssets += 1
 
