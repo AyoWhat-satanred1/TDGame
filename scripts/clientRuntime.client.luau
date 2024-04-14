@@ -1,12 +1,24 @@
 --#selene: allow(global_usage)
+
+-- display loading screen first
+local ReplicatedFirst = game:GetService("ReplicatedFirst")
+local LocalPlayer = game:GetService("Players").LocalPlayer
+local loadingScreen = ReplicatedFirst.LoadingScreen
+loadingScreen.Parent = LocalPlayer:WaitForChild("PlayerGui")
+loadingScreen.Enabled = true
+
+ReplicatedFirst:RemoveDefaultLoadingScreen()
+
+-- start initializing
 if not game:IsLoaded() then
 	game.Loaded:Wait()
 end
 
 task.wait()
 
-local LocalPlayer = game:GetService("Players").LocalPlayer
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local ContentProvider = game:GetService("ContentProvider")
+local RunService = game:GetService("RunService")
 local Client = ReplicatedStorage.client
 local UIFolder = Client.ui
 local Packages = ReplicatedStorage.Packages
@@ -80,3 +92,38 @@ end
 Promise.allSettled(appPromises):await()
 
 -- root:render(ReactRoblox.createPortal(appNodes, LocalPlayer.PlayerGui))
+
+-- continue loading screen preloads
+local assetsLoadedText = loadingScreen.Background.DisplayAssetsLoaded
+local percentageText = loadingScreen.Background.DisplayPercentage
+local skipBar = loadingScreen.Background.BarBackground.Bar
+local skipButton = loadingScreen.Background.SkipButton
+
+local assets: { Model } = {}
+for _, instance in workspace.Assets:GetDescendants() do
+    if instance:IsA("Model") then
+        table.insert(assets, instance)
+    end
+end
+
+assetsLoadedText.Text = `Loaded Assets : 0/{#assets}`
+
+local loadedAssets = 0
+local preloadPromise = Promise.try(function()
+    for _, asset in ipairs(assets) do
+        ContentProvider:PreloadAsync({ asset })
+        loadedAssets += 1
+
+        local currentProgress = loadedAssets / #assets
+        skipBar.Size = UDim2.fromScale(currentProgress, 1)
+        percentageText.Text = `{math.round(currentProgress * 100)}%`
+        assetsLoadedText.Text = `Loaded Assets : {loadedAssets}/{#assets}`
+    end
+end):finally(function()
+    task.wait(0.4)
+    loadingScreen:Destroy()
+end)
+
+skipButton.MouseButton1Click:Connect(function()
+    preloadPromise:cancel()
+end)
