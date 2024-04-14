@@ -72,6 +72,10 @@ local function playerRemoving(player)
     end
 end
 
+local function doesExist(value: any)
+    return value ~= nil
+end)
+
 producer:observe(selectors.selectPlayers, selectors.selectPlayerId, function(player: producer.PlayerEntity, _index)
     local playerInstance = Players:GetPlayerByUserId(tonumber(player.id) :: number) :: Player
     
