@@ -94,17 +94,17 @@ producer:observe(selectors.selectPlayers, selectors.selectPlayerId, function(pla
 
     leaderstats.Parent = playerInstance
     
-    local unsubscribeSave = producer:subscribe(selectors.selectPlayerById(player.id), function(current: producer.PlayerEntity, previous: producer.PlayerEntity?)
+    local unsubscribeSave = producer:subscribe(selectors.selectPlayerById(player.id), doesExist, function(current: producer.PlayerEntity, previous: producer.PlayerEntity?)
         if previous ~= nil then
             documents[playerInstance]:write(Dict.removeKey(current, "id") :: never)
         end
     end)
 
-    local unsubscribeLevel = producer:subscribe(selectors.selectPlayerLevelById(player.id), function(current: number, _previous: number?)
+    local unsubscribeLevel = producer:subscribe(selectors.selectPlayerLevelById(player.id), doestExist, function(current: number, _previous: number?)
         levelValue.Value = current
     end)
 
-    local unsubscribeWins = producer:subscribe(selectors.selectPlayerWinsById(player.id), function(current: number, _previous: number?)
+    local unsubscribeWins = producer:subscribe(selectors.selectPlayerWinsById(player.id), doesExist, function(current: number, _previous: number?)
         winsValue.Value = current
     end)
 
