@@ -77,7 +77,7 @@ local function getPlayerId(player: producer.PlayerEntity, _index: string)
 end
 
 producer:observe(selectors.selectPlayers, getPlayerId, function(player: producer.PlayerEntity, _index)
-    local playerInstance = Players:GetPlayerByUserId(tonumber(player.id) :: number)
+    local playerInstance = Players:GetPlayerByUserId(tonumber(player.id) :: number) :: Player
     
     local leaderstats = Instance.new("Folder")
     leaderstats.Name = "leaderstats"
@@ -96,7 +96,7 @@ producer:observe(selectors.selectPlayers, getPlayerId, function(player: producer
     
     local unsubscribeSave = producer:subscribe(selectors.selectPlayerById(player.id), function(current: producer.PlayerEntity, previous: producer.PlayerEntity?)
         if previous ~= nil then
-            documents[playerInstance]:write(Dict.removeKey(current, "id"))
+            documents[playerInstance]:write(Dict.removeKey(current, "id") :: never)
         end
     end)
 
