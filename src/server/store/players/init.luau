@@ -74,7 +74,7 @@ end
 
 local function doesExist(value: any)
     return value ~= nil
-end)
+end
 
 producer:observe(selectors.selectPlayers, selectors.selectPlayerId, function(player: producer.PlayerEntity, _index)
     local playerInstance = Players:GetPlayerByUserId(tonumber(player.id) :: number) :: Player
@@ -100,7 +100,7 @@ producer:observe(selectors.selectPlayers, selectors.selectPlayerId, function(pla
         end
     end)
 
-    local unsubscribeLevel = producer:subscribe(selectors.selectPlayerLevelById(player.id), doestExist, function(current: number, _previous: number?)
+    local unsubscribeLevel = producer:subscribe(selectors.selectPlayerLevelById(player.id), doesExist, function(current: number, _previous: number?)
         levelValue.Value = current
     end)
 

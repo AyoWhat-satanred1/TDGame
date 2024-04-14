@@ -30,5 +30,6 @@ return {
     selectPlayers = selectPlayers,
     selectPlayerById = selectPlayerById,
     selectPlayerLevelById = selectPlayerLevelById,
-    selectPlayerWinsById = selectPlayerWinsById
+    selectPlayerWinsById = selectPlayerWinsById,
+    selectPlayerId = selectPlayerId,
 }
