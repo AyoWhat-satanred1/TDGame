@@ -16,13 +16,13 @@ end
 
 local function selectPlayerLevelById(id: string)
     return function(state: players.PlayersState)
-        return state.entities[id].level
+        return state.entities[id] and state.entities[id].level
     end
 end
 
 local function selectPlayerWinsById(id: string)
     return function(state: players.PlayersState)
-        return state.entities[id].wins
+        return state.entities[id] and state.entities[id].wins
     end
 end
 

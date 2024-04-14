@@ -8,7 +8,7 @@ task.wait()
 local LocalPlayer = game:GetService("Players").LocalPlayer
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Client = ReplicatedStorage.client
-local UIFolder = Client.UI
+local UIFolder = Client.ui
 local Packages = ReplicatedStorage.Packages
 local Knit = require(Packages._Index["sleitnick_knit@1.7.0"]["knit"]["KnitClient"])
 local React = require(Packages.React)
