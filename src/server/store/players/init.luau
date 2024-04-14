@@ -72,11 +72,7 @@ local function playerRemoving(player)
     end
 end
 
-local function getPlayerId(player: producer.PlayerEntity, _index: string)
-    return player.id
-end
-
-producer:observe(selectors.selectPlayers, getPlayerId, function(player: producer.PlayerEntity, _index)
+producer:observe(selectors.selectPlayers, selectors.selectPlayerId, function(player: producer.PlayerEntity, _index)
     local playerInstance = Players:GetPlayerByUserId(tonumber(player.id) :: number) :: Player
     
     local leaderstats = Instance.new("Folder")
