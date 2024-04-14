@@ -22,7 +22,7 @@ local collection = Lapis.createCollection("PlayerData", {
     defaultData = dataStoreConfig.defaultData,
     validate = t.strictInterface({
         money = t.unsignedInteger,
-        level = t.unsignedInteger,
+        level = t.integerMin(1),
         exp = t.unsignedInteger,
         wins = t.unsignedInteger,
         ownedTowers = t.map(t.string, t.strictInterface({ name = t.string })),
