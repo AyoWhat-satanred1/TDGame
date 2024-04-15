@@ -48,7 +48,7 @@ local function playerAdded(player)
                 local playerData = document:read()
                 producer.addPlayer(Dict.merge(playerData, {
                     id = tostring(id)
-                } :: producer.PlayerEntity))
+                }))
             end
         end)
         :catch(function(reason)
