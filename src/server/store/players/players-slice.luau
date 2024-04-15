@@ -24,6 +24,7 @@ export type PlayersState = {
 export type PlayersActions = {
     addPlayer: (playerData: PlayerEntity) -> (),
     removePlayer: (id: string) -> (),
+    increaseWins: (id: string) -> ()
 }
 
 local initialState: PlayersState = {
@@ -31,18 +32,26 @@ local initialState: PlayersState = {
 }
 
 local playersSlice = Reflex.createProducer(initialState, {
-    addPlayer = function(state, playerData: PlayerEntity)
+    addPlayer = function(state, playerData: PlayerEntity): PlayersState
         return Dict.mergeDeep(state, {
             entities = {
                 [playerData.id] = playerData
             }
-        } :: PlayersState)
+        })
     end,
 
-    removePlayer = function(state, id: string)
+    removePlayer = function(state, id: string): PlayersState
         return Dict.merge(state, {
             entities = Dict.removeKey(state.entities, id)
-        } :: PlayersState)
+        })
+    end,
+
+    increaseWins = function(state, id: string): PlayersState
+        return Dict.mergeDeep(state, {
+            entities = {
+                [id] = { wins = state.entities[id].wins + 1 }
+            }
+        })
     end
 }) :: Reflex.Producer<PlayersState, PlayersActions>
 

@@ -1,3 +1,4 @@
+--!nocheck
 --[[
 	Provides an interface to quickly run and report tests from a given object.
 ]]

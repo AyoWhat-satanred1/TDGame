@@ -29,12 +29,20 @@
       "ReplicatedFirst" : {
         "clientRuntime" : {
           "$path" : "scripts/clientRuntime.client.luau"
+        },
+
+        "ClientTestsRunner": {
+          "$path" : "scripts/run-tests.client.luau"
         }
       },
   
       "ServerScriptService" : {
         "serverRuntime" : {
           "$path" : "scripts/serverRuntime.server.luau"
+        },
+
+        "ServerTestsRunner": {
+          "$path" : "scripts/run-tests.server.luau"
         }
       }
     }
