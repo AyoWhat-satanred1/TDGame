@@ -4,7 +4,6 @@ local ServerStorage = game:GetService("ServerStorage")
 local ServerPackages = ServerStorage.ServerPackages
 local Packages = ReplicatedStorage.Packages
 local Shared = ReplicatedStorage.shared
-local Knit = require(Packages.KnitServer)
 local Lapis = require(ServerPackages.Lapis)
 local Sift = require(Packages.Sift)
 local Dict = Sift.Dictionary
@@ -13,13 +12,18 @@ local producer = require(ServerStorage.server.store["root-producer"])
 local selectors = require(ServerStorage.server.store.players["players-selectors"])
 local dataStoreConfig = require(Shared.configs["dataStore-config"])
 
+type DataStoreService = {
+    Name: string,
+    Client: {},
+    KnitInit: (self: DataStoreService) -> (),
+    _documents: { [Player]: Lapis.Document<dataStoreConfig.DefaultData> }
+}
+
 local DataStoreService = {
     Name = "DataStoreService",
     Client = {},
-    documents = {}
-} :: Knit.ServiceDef & {
-    documents: { [Player]: Lapis.Document<dataStoreConfig.DefaultData> }
-}
+    _documents = {}
+} :: DataStoreService
 
 function DataStoreService:KnitInit()
     local collection = Lapis.createCollection("PlayerData", {
@@ -51,7 +55,7 @@ function DataStoreService:KnitInit()
                             warn(`{player.Name}'s Document Failed to close, {reason} - error on server/store/players`)
                         end)
                 else
-                    self.documents[player] = document
+                    self._documents[player] = document
     
                     local playerData = document:read()
                     producer.addPlayer(Dict.merge(playerData, {
@@ -66,12 +70,12 @@ function DataStoreService:KnitInit()
     end
     
     local function playerRemoving(player)
-        local document = self.documents[player]
+        local document = self._documents[player]
     
         if document ~= nil then
             producer.removePlayer(tostring(player.UserId))
-            self.documents[player] = nil
-    
+            self._documents[player] = nil
+
             document
                 :close()
                 :catch(function(reason)
@@ -100,7 +104,7 @@ function DataStoreService:KnitInit()
         
         local selectPlayer = selectors.selectPlayerById(player.id)
         local unsubscribeSave = producer:subscribe(selectPlayer, doesExist, function(current: producer.PlayerEntity, _previous: producer.PlayerEntity?)
-            self.documents[playerInstance]:write(Dict.removeKey(current, "id") :: never)
+            self._documents[playerInstance]:write(Dict.removeKey(current, "id") :: never)
         end)
     
         local selectLevel = selectors.selectPlayerLevelById(player.id)
