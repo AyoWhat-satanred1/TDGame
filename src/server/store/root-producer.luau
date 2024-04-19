@@ -1,15 +1,18 @@
 local Packages = game:GetService("ReplicatedStorage").Packages
 local Reflex = require(Packages.Reflex)
-local players = require(script.Parent.players)
+
+local playersSlice = require(script.Parent.players["players-slice"])
+
+export type PlayerEntity = playersSlice.PlayerEntity
 
 export type RootProducer = Reflex.Producer<RootState, RootActions>
 
 export type RootState = {
-    players: players.State
+    players: playersSlice.PlayersState
 }
 
-type RootActions = players.Actions
+type RootActions = playersSlice.PlayersActions
 
 return Reflex.combineProducers({
-    players = players.playersSlice
+    players = playersSlice
 }) :: RootProducer

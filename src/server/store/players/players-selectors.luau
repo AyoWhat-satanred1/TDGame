@@ -1,28 +1,28 @@
-local players = require(script.Parent["players-slice"])
+local producer = require(script.Parent.Parent["root-producer"])
 
-local function selectPlayers(state: players.PlayersState)
-    return state.entities
+local function selectPlayers(state: producer.RootState)
+    return state.players.entities
 end
 
 local function selectPlayerById(id: string)
-    return function(state: players.PlayersState)
-        return state.entities[id]
+    return function(state: producer.RootState)
+        return state.players.entities[id]
     end
 end
 
-local function selectPlayerId(player: players.PlayerEntity, _index: string)
+local function selectPlayerId(player: producer.PlayerEntity, _index: string)
     return player.id
 end
 
 local function selectPlayerLevelById(id: string)
-    return function(state: players.PlayersState)
-        return state.entities[id] and state.entities[id].level
+    return function(state: producer.RootState)
+        return state.players.entities[id] and state.players.entities[id].level
     end
 end
 
 local function selectPlayerWinsById(id: string)
-    return function(state: players.PlayersState)
-        return state.entities[id] and state.entities[id].wins
+    return function(state: producer.RootState)
+        return state.players.entities[id] and state.players.entities[id].wins
     end
 end
 

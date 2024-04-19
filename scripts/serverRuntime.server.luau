@@ -2,7 +2,7 @@ local ServerStorage = game:GetService("ServerStorage")
 local ServerFolder = ServerStorage.server
 local Packages = game:GetService("ReplicatedStorage").Packages
 local Promise = require(Packages.Promise)
-local Knit = require(Packages.Knit)
+local Knit = require(Packages.KnitServer)
 local load = Promise.promisify(require)
 local SERVICE_TIMEOUT = 5
 
