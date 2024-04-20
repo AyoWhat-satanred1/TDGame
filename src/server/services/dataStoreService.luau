@@ -11,19 +11,13 @@ local t = require(Packages["t"])
 local producer = require(ServerStorage.server.store["root-producer"])
 local selectors = require(ServerStorage.server.store.players["players-selectors"])
 local dataStoreConfig = require(Shared.configs["dataStore-config"])
-
-type DataStoreService = {
-    Name: string,
-    Client: {},
-    KnitInit: (self: DataStoreService) -> (),
-    _documents: { [Player]: Lapis.Document<dataStoreConfig.DefaultData> }
-}
+local serviceTypes = require(Shared.types.serviceTypes)
 
 local DataStoreService = {
     Name = "DataStoreService",
     Client = {},
     _documents = {}
-} :: DataStoreService
+} :: serviceTypes.DataStoreService
 
 function DataStoreService:KnitInit()
     local collection = Lapis.createCollection("PlayerData", {
