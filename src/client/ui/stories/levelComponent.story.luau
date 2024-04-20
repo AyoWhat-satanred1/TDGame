@@ -4,6 +4,9 @@ local React = require(Packages.React)
 local ReactRoblox = require(Packages.ReactRoblox)
 local e = React.createElement
 
+local level = 1
+local targetLevel = 2
+
 type LevelBarProps = {
     level: number,
     targetLevel: number
@@ -66,13 +69,13 @@ local LevelComponent: React.FC<{}> = function()
             TextColor3 = Color3.fromRGB(255, 255, 255),
             TextStrokeColor3 = Color3.fromRGB(0, 0, 255),
             TextStrokeTransparency = 0.5,
-            Text = "Level : SomeLevel",
+            Text = `Level : {level}`,
             TextScaled = true
         }),
 
         LevelBar = LevelBar({
-            level = 1,
-            targetLevel = 2
+            level = level,
+            targetLevel = targetLevel
         })
     })
 end
