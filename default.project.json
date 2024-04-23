@@ -31,7 +31,7 @@
           "$path" : "scripts/clientRuntime.client.luau"
         },
 
-        "ClientTestsRunner": {
+        "clientTestsRunner": {
           "$path" : "scripts/run-tests.client.luau"
         }
       },
@@ -41,7 +41,7 @@
           "$path" : "scripts/serverRuntime.server.luau"
         },
 
-        "ServerTestsRunner": {
+        "serverTestsRunner": {
           "$path" : "scripts/run-tests.server.luau"
         }
       }

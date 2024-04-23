@@ -1,7 +1,11 @@
 if game:GetService("RunService"):IsStudio() then
+    if not game:IsLoaded() then
+        game.Loaded:Wait()
+    end
+
     local ReplicatedStorage = game:GetService("ReplicatedStorage")
-    local TestEZ = require(ReplicatedStorage:WaitForChild("Packages"):WaitForChild("TestEZ"))
-    local tests = ReplicatedStorage:WaitForChild("client"):WaitForChild("tests")
+    local TestEZ = require(ReplicatedStorage.Packages.TestEZ)
+    local tests = ReplicatedStorage.client.tests
 
     TestEZ.TestBootstrap:run({ tests }, TestEZ.Reporters.TextReporter)
 end
