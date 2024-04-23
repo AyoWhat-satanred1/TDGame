@@ -1,7 +1,9 @@
-local Packages = game:GetService("ReplicatedStorage").Packages
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Packages = ReplicatedStorage.Packages
 local Reflex = require(Packages.Reflex)
 local Sift = require(Packages.Sift)
 local Dict = Sift.Dictionary
+local dataStoreConfig = require(ReplicatedStorage.shared.configs["dataStore-config"])
 
 export type PlayerEntity = {
     id: string,
@@ -24,7 +26,8 @@ export type PlayersState = {
 export type PlayersActions = {
     addPlayer: (playerData: PlayerEntity) -> (),
     removePlayer: (id: string) -> (),
-    increaseWins: (id: string) -> ()
+    resetDatas: (id: string) -> (),
+    increaseWins: (id: string) -> (),
 }
 
 local initialState: PlayersState = {
@@ -43,6 +46,14 @@ local playersSlice = Reflex.createProducer(initialState, {
     removePlayer = function(state, id: string): PlayersState
         return Dict.merge(state, {
             entities = Dict.removeKey(state.entities, id)
+        })
+    end,
+
+    resetDatas = function(state, id: string): PlayersState
+        return Dict.merge(state, {
+            entities = {
+                [id] = Dict.merge(dataStoreConfig.defaultData, { id = id })
+            }
         })
     end,
 
