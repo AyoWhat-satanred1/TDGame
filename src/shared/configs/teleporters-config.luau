@@ -10,7 +10,7 @@ export type Teleporter = {
 
 return {
     {
-        name = "MB Portal Room",
+        name = "MB Portal",
         path = portals["MB Portal Room"],
         maxPlayers = 4,
         targetPlaceId = 0,
