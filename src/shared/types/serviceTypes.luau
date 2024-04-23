@@ -18,4 +18,14 @@ export type DataStoreServiceClient = {
 
 }
 
+export type TeleporterService = {
+    Name: "TeleporterService",
+    Client: TeleporterServiceClient,
+    KnitInit: (self: TeleporterService) -> (),
+}
+
+export type TeleporterServiceClient = {
+
+}
+
 return nil

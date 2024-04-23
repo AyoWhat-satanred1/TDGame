@@ -9,11 +9,15 @@ export type Teleporter = {
 }
 
 return {
-    {
-        name = "MB Portal",
-        path = portals["MB Portal Room"],
-        maxPlayers = 4,
-        targetPlaceId = 0,
-        allowTeleport = false -- testing
-    }
-} :: { Teleporter }
+    teleporters = {
+        {
+            name = "MB Portal",
+            path = portals["MB Portal Room"],
+            maxPlayers = 4,
+            targetPlaceId = 0,
+            allowTeleport = false
+        }
+    },
+} :: {
+    teleporters: { Teleporter }
+}
