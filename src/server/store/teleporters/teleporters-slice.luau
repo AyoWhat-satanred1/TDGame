@@ -1,3 +1,9 @@
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Packages = ReplicatedStorage.Packages
+local Reflex = require(Packages.Reflex)
+local Sift = require(Packages.Sift)
+local Dict = Sift.Dict
+
 export type TeleportersState = {
     entities: { [string]: TeleporterEntity }
 }
@@ -16,4 +22,12 @@ export type TeleportersActions = {
     resetTeleporter: (teleporter: string) -> ()
 }
 
-return nil
+local initialState: TeleportersState = {
+    entities = {}
+}
+
+local teleportersSlice = Reflex.createProducer(initialState, {
+    
+}) :: Reflex.Producer<TeleportersState, TeleportersActions>
+
+return teleportersSlice
