@@ -73,7 +73,7 @@ local LevelComponent: React.FC<{}> = function()
             TextScaled = true
         }),
 
-        LevelBar = LevelBar({
+        LevelBar = e(LevelBar, {
             level = level,
             targetLevel = targetLevel
         })
