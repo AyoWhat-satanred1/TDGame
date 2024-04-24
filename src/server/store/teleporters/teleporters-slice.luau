@@ -9,8 +9,11 @@ export type TeleporterEntity = {
 }
 
 export type TeleportersActions = {
-    joinPlayer: (player: Player) -> (),
-    removePlayer: (player: Player) -> (),
+    joinPlayer: (teleporter: string, player: Player) -> (),
+    removePlayer: (teleporter: string, player: Player) -> (),
+    startTeleport: (teleporter: string) -> (),
+    updateTeleporter: (teleporter: string) -> (),
+    resetTeleporter: (teleporter: string) -> ()
 }
 
 return nil
